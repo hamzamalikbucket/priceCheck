@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:compareapp/modules/screens/dashboard/bottom_nav_bar.dart';
 import 'package:compareapp/resources/Widgets/app_text.dart';
 import 'package:compareapp/resources/utils/app_colors.dart';
 import 'package:compareapp/resources/utils/constants.dart';
@@ -262,9 +263,13 @@ class LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             fontSize: 16.0
         );
-        Navigator.pushNamed(context, '/BottomNavigationBarScreen');
+    /*    Navigator.pushNamed(context, '/BottomNavigationBarScreen');*/
 
-
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
+            (Route<dynamic> route) => false,
+      );
 
 
 

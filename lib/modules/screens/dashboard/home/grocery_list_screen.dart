@@ -163,7 +163,7 @@ class GroceryState extends State<GroceryListScreen> {
                         color: AppColors.black,
                       ),
                       AppText(
-                        'Grocery Total: \$ ${totalPrice}',
+                        'Grocery Total: \$ ${totalPrice.toStringAsFixed(2)}',
                         size: 12,
                         fontWeight: FontWeight.w500,
                         color: AppColors.black,

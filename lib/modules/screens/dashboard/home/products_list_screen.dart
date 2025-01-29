@@ -622,7 +622,9 @@ class ProductState extends State<ProductsListScreen> {
                                       AppGradiantButton(
 
                                         onTap: () {
+
                                           setState(() {
+
                                             selectedSubCategoryValue = null;
                                             selectedSortValue = null;
                                             selectedBrandsValue = null;
@@ -630,7 +632,12 @@ class ProductState extends State<ProductsListScreen> {
                                             selectedStoreValue = null;
                                             basketValue = "Value";
                                             sortTag = "Value";
+                                            isLoading = true;
+                                            productsList.clear();
                                           });
+                                          fetchProducts(category, catCode,catId);
+                                          Navigator.pop(context);
+
 
 
                                         },
