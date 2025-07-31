@@ -158,6 +158,13 @@ class DetailState extends State<ShopDetailScreen> {
                   child: Image.network(
                    image,
                     fit: BoxFit.fill,
+                    errorBuilder:
+                        (context, error, stackTrace) {
+                      return Image.asset(
+                        "assets/images/dummy_store.png",
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
                 const SizeBoxHeight4(),
@@ -180,11 +187,13 @@ class DetailState extends State<ShopDetailScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              AppText(
-                                name,
-                                size: 14.5,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.black,
+                              Expanded(
+                                child: AppText(
+                                  name,
+                                  size: 14.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black,
+                                ),
                               ),
                             ],
                           ),

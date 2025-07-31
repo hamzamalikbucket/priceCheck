@@ -1,13 +1,13 @@
 class VendorModel{
   String vendorName;
   String vendorCode;
-  int vendorId;
+  int? vendorId;
 
 
   VendorModel({
   required this.vendorName,
     required this.vendorCode,
-    required this.vendorId
+   this.vendorId
   });
   factory VendorModel.fromJson(Map<String, dynamic> json) {
     return VendorModel(

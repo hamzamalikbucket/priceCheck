@@ -6,6 +6,7 @@ import 'package:compareapp/resources/utils/app_colors.dart';
 import 'package:compareapp/resources/utils/constants.dart';
 import 'package:compareapp/resources/widgets/ToolbarImage.dart';
 import 'package:compareapp/resources/widgets/app_field.dart';
+import 'package:compareapp/resources/widgets/buttons/app_button.dart';
 import 'package:compareapp/resources/widgets/sized_boxes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,20 +17,20 @@ import 'package:bottom_loader/bottom_loader.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginViaPhone extends StatefulWidget {
+  const LoginViaPhone({super.key});
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return LoginScreenState();
+    return LoginViaPhoneState();
   }
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class LoginViaPhoneState extends State<LoginViaPhone> {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   bool boxValue = true;
   late BottomLoader bl;
 
@@ -77,7 +78,7 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizeBoxHeight4(),
                       const AppHeadings(
-                        'Welcome to Price Check',
+                        'Login With Your Phone Number',
                         size: 20,
                         fontWeight: FontWeight.w600,
                         color: AppColors.black,
@@ -96,77 +97,33 @@ class LoginScreenState extends State<LoginScreen> {
                                     width: 0.5)),
                           ),
                           AppIconField(
-                            controller: emailController,
-                            hint: 'Enter email',
-                            prefixIcon: Constants.emailIcon,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
+                              controller: phoneController,
+                              hint: 'Enter Phone Number',
+                              prefixIcon: Constants.phone,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
                               validator: (val) {
                                 if (val == null || val.trim().isEmpty) {
-                                  return 'Required ';
-                                }else if(val.trim().isNotEmpty){
-                                  return EmailValidator.validate(val) ? null : 'Please enter valid email';
-
+                                  return "Phone is Required";
+                                } else if (val.trim().length < 11) {
+                                  return "Valid Phone Required";
                                 }
                                 return null;
                               }
                           ),
                         ],
                       ),
-                      const SizeBoxHeight16(),
-                      const SizeBoxHeight8(),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 60,
-                            decoration: BoxDecoration(
-                                color: AppColors.containerBgColor,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: AppColors.containerBgColor,
-                                    width: 0.5)),
-                          ),
-                          AppPasswordField(
-                            controller: passwordController,
-                            hint: 'Password',
-                            prefixIcon: Constants.lock,
-                            suffixIcon: Constants.eye,
-                            keyboardType: TextInputType.visiblePassword,
-                            textInputAction: TextInputAction.next,
-                            validator: (val) {
-                              if (val == null || val.trim().isEmpty) {
-                                return "Password Required";
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizeBoxHeight16(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/PhoneLoginScreen');
-                            },
-                            child: const AppText(
-                              underline: true,
-                              'Login With Phone Number',
-                              size: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.appBlueColor,
-                            ),
-                          ),
-                        ],
-                      ),
+
 
                     ],
                   ),
                 ),
                 const SizeBoxHeight16(),
                 const SizeBoxHeight16(),
-                GestureDetector(
+
+                const SizeBoxHeight32(),
+
+                AppSimpleButton(
                   onTap: () async{
                     final form = loginFormKey.currentState;
                     form!.save();
@@ -183,41 +140,16 @@ class LoginScreenState extends State<LoginScreen> {
                     }
 
                   },
-                  child: SvgPicture.asset(
-                    Constants.loginBTn,
-                  ),
-                ),
+                  width:MediaQuery.of(context).size.width,
+                  height: 60,
+                  btnText: "Proceed",
+                  btnColor: AppColors.appBlueColor,
+                  btnTextColor: AppColors.primaryColor,
+                  fontWeight: FontWeight.w700,
 
-                const SizeBoxHeight32(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/ForgotPassword');
-                      },
-                      child: const AppText(
-                        underline: true,
-                        'Forgot your password?',
-                        size: 12,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.appBlueColor,
-                      ),
-                    ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/RegisterScreen');
-                  },
-                  child: const AppText(
-                    'Dont have an account?SignUp',
-                    size: 16,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.appBlueColor,
-                  ),
-                ),
 
+
+                ),
 
               ],
             ),
@@ -227,13 +159,13 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
   Future<dynamic> login() async {
-    var url = Uri.parse('${Constants.baseUrl}login');
+    var url = Uri.parse('${Constants.baseUrl}loginWithPhone');
     var response = await http
         .post(
       url,
       body: {
-        "email": emailController.text.toString(),
-        "password": passwordController.text.toString(),
+        "phone": phoneController.text.toString(),
+
 
       },
 
@@ -246,50 +178,29 @@ class LoginScreenState extends State<LoginScreen> {
       dynamic body = jsonDecode(response.body);
       print(body);
       dynamic status=body['message'];
-      dynamic id=body['user_id'];
-      dynamic user=body["user"];
-      dynamic name=user["name"];
-      dynamic email=user["email"];
-      dynamic dob=user["dob"];
-      dynamic lastName=user["last_name"];
-      dynamic country=user["country"];
-      dynamic state=user["state"];
+
 
       setState(() {
-        Constants.userName=name;
-        Constants.userEmail=email;
-        Constants.userDob=dob;
-        Constants.userLastName=lastName;
-        Constants.userCountry=country;
-        Constants.userId=id.toString();
-        Constants.state=state;
+      Constants.tempPhone=phoneController.text.toString();
+      Constants.verifiedViaPhone=true;
       });
 
 
 
-      await saveLoginState(true);
+
       bl.close();
-        Fluttertoast.showToast(
-            msg: status,
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.SNACKBAR,
-            timeInSecForIosWeb: 1,
-            backgroundColor:AppColors.appBlueColor,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
-
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
-            (Route<dynamic> route) => false,
+      Fluttertoast.showToast(
+          msg: status,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          backgroundColor:AppColors.appBlueColor,
+          textColor: Colors.white,
+          fontSize: 16.0
       );
 
 
-
-
-
+      Navigator.pushNamed(context,'/OtpScreen');
     } else {
       bl.close();
       dynamic body = jsonDecode(response.body);

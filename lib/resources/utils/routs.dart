@@ -10,6 +10,7 @@ import 'package:compareapp/modules/screens/auth/activate_biometric_screen.dart';
 import 'package:compareapp/modules/screens/auth/create_profile_screen.dart';
 import 'package:compareapp/modules/screens/auth/forgot_password_screen.dart';
 import 'package:compareapp/modules/screens/auth/login_screen.dart';
+import 'package:compareapp/modules/screens/auth/login_via_phone_screen.dart';
 import 'package:compareapp/modules/screens/auth/otp_screen.dart';
 import 'package:compareapp/modules/screens/auth/register_screen.dart';
 import 'package:compareapp/modules/screens/auth/set_new_password_screen.dart';
@@ -51,12 +52,15 @@ class AppRoute {
 
 
       case '/RegisterScreen':
-        return MaterialPageRoute(builder: (context) => const RegisterScreen());
+        return MaterialPageRoute(builder: (context) => const RegisterScreen(),
+          settings: routeArguments,
+        );
       case '/CreateProfileScreen':
         return MaterialPageRoute(builder: (context) => const CreateProfileScreen());
       case '/OtpScreen':
         return MaterialPageRoute(builder: (context) => const OtpScreen());
-
+      case '/PhoneLoginScreen':
+        return MaterialPageRoute(builder: (context) => const LoginViaPhone());
       case '/AllProductsScreen':
         return MaterialPageRoute(
           builder: (context) => const ProductsListScreen(),

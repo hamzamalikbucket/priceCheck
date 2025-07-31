@@ -48,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchVendors() async {
     List<VendorModel> data = await apiService.getVendors();
     setState(() {
+      vendorList.clear();
+      vendorList.add(
+        VendorModel(vendorName: "All Supermarkets", vendorCode: "-1", vendorId: -1),
+      );
       vendorList.addAll(data);
     });
   }
@@ -171,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "categoryId":pM.catCode.toString(),*/
                             },
                           );
+                          searchController.clear();
                         },
                         child: const ImageIcon(
                           AssetImage(Constants.search),
@@ -202,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   : SizedBox(
-                      height: 130,
+                      height: 150,
                       child: ListView.builder(
                         itemCount: categoriesList.length,
                         scrollDirection: Axis.horizontal,
@@ -241,6 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 125,
                                 child: Column(
                                   children: [
+                                    const SizeBoxHeight8(),
+                                    const SizeBoxHeight8(),
                                     const SizeBoxHeight8(),
                                     Container(
                                       height: 58,
@@ -334,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColors.appBlueColor,
                       ),
                     )
-                  : SizedBox(
+                  : featuredProductList.isNotEmpty?  SizedBox(
                       height: 320,
                       child: ListView.builder(
                         itemCount: featuredProductList.length,
@@ -476,7 +483,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                       ),
-                    ),
+                    ): const Center(
+                child: AppText(
+                  "No Product Found",
+                  size: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.greyTextColor,
+                ),
+              ),
               const SizeBoxHeight16(),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
@@ -513,8 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           value: selectedVendor,
                           onChange: (value) async {
                             if (value != null) {
-                              print(
-                                  "Selected Vendor Name: ${value.vendorName}");
+                              print("Selected Vendor Name: ${value.vendorName}");
 
                               setState(() {
                                 selectedVendor = value;
@@ -523,20 +536,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                 selectedMarket = value.vendorName;
                                 isProductLoading = true;
 
-                                print(
-                                    "Selected Vendor Code: ${selectedMarketDropDownValueCode}");
+                                print("Selected Vendor Code: ${selectedMarketDropDownValueCode}");
                                 superMarkerProductList.clear();
+                                featuredProductList.clear();
                               });
+                              if( selectedMarketDropDownValueCode == "-1") {
+                                // If "All Supermarkets" is selected, fetch all products
+                                List<SuperMarketProductsModel> data =
+                                    await apiService.getProducts();
+                                List<FeaturedProductsModel> featData = await apiService.getFeaturedProducts();
+                                setState(() {
+                                  superMarkerProductList.addAll(data);
+                                  featuredProductList.addAll(featData);
+                                  isProductLoading = false;
+                                });
+                              } else {
+                                // Fetch products for the selected vendor
+
                               List<SuperMarketProductsModel> data =
                                   await apiService.getProductsbyVendorsCode(
                                       selectedMarketDropDownValueCode);
+                              List<FeaturedProductsModel> featureData =
+                              await apiService.getFeaturedProductsbyVendorsCode(
+                                  selectedMarketDropDownValueCode);
                               setState(() {
                                 superMarkerProductList.addAll(data);
+                                featuredProductList.addAll(featureData);
                                 isProductLoading = false;
                               });
                             }
-                          },
-                        )),
+                          }
+                        }))
                   ],
                 ),
               ),
@@ -550,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     : superMarkerProductList.isNotEmpty
                         ? GridView.builder(
-                            itemCount: min(superMarkerProductList.length, 7),
+                            itemCount: min(superMarkerProductList.length, 8),
                             shrinkWrap: true,
                             physics:
                                 const NeverScrollableScrollPhysics(), // Prevent nested scrolling
@@ -560,7 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisSpacing: 6, // Space between columns
                               mainAxisSpacing: 30, // Space between rows
                               childAspectRatio:
-                                  0.5, // Adjust aspect ratio for item height and width
+                                  0.45, // Adjust aspect ratio for item height and width
                             ),
 
                             scrollDirection: Axis.vertical,
@@ -575,7 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       arguments: {
                                         "id": sMp.productId,
                                         "image": sMp.productImg,
-                                        "price": sMp.productPrice,
+                                        "price": sMp.saleTag?sMp.salePrice:sMp.productPrice,
                                         "name": sMp.productName,
                                       });
                                 },
@@ -590,6 +620,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
+                                       sMp.saleTag? Row(
+                                         children: [
+                                           Container(
+                                             width: 30,
+                                             color: AppColors.greenColor,
+                                             child: const Center(
+                                               child: AppText(
+                                                 "Sale",
+                                                 size: 12,
+                                                 fontWeight: FontWeight.w400,
+                                                 color: AppColors.appBarBackgroundColor,
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ): const SizedBox(),
                                         Container(
                                           width: 170,
                                           height: 195,
@@ -631,14 +677,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizeBoxHeight8(),
                                             Row(
                                               children: [
-                                                AppText(
+                                                Text(
                                                   "\$${sMp.productPrice}",
+                                                  style:  TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                    color:sMp.saleTag? AppColors.redColor: AppColors.black,
+                                                    decoration: sMp.saleTag? TextDecoration.lineThrough:TextDecoration.none,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizeBoxHeight8(),
+                                            sMp.saleTag? Row(
+                                              children: [
+                                                AppText(
+                                                  "\$${sMp.salePrice}",
                                                   size: 12,
                                                   fontWeight: FontWeight.w600,
                                                   color: AppColors.black,
                                                 ),
                                               ],
-                                            ),
+                                            ):const SizedBox(),
                                             const SizeBoxHeight8(),
                                             Row(
                                               mainAxisAlignment:

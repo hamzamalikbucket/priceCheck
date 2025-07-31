@@ -11,6 +11,7 @@ class AppText extends StatelessWidget {
   final bool justifyText;
   final bool alignText;
   final bool underline;
+  final bool overline;
   final int? line;
   final Function()? onTap;
 
@@ -22,6 +23,7 @@ class AppText extends StatelessWidget {
     this.alignText = false,
     this.onTap,
     this.underline = false,
+    this.overline = false,
     this.line,
     this.fontWeight = FontWeight.normal,
   });
@@ -42,7 +44,11 @@ class AppText extends StatelessWidget {
           fontWeight: fontWeight,
           color: color,
           fontSize: size,
-          decoration: underline ? TextDecoration.underline : null,
+          decoration: underline
+              ? TextDecoration.underline
+              : overline
+                  ? TextDecoration.overline
+                  : null,
         ),
       ),
     );

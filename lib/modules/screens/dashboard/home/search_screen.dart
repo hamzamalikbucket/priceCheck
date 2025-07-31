@@ -84,6 +84,7 @@ class SearchState extends State<SearchScreen>{
                                       "categoryId":pM.catCode.toString(),*/
                             },
                           );
+                          searchController.clear();
                         },
                         child: const ImageIcon(
                           AssetImage(Constants.search),

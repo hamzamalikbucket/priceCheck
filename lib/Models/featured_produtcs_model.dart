@@ -4,6 +4,8 @@ class FeaturedProductsModel{
   String productPrice;
   String productBrand;
   String productId;
+  bool saleTag;
+  String  salePrice;
 
 
   FeaturedProductsModel({
@@ -13,6 +15,8 @@ class FeaturedProductsModel{
     required this.productPrice,
     required this.productBrand,
     required this.productId,
+    this.saleTag=false,
+    this.salePrice="22220.00",
 
 
 
@@ -25,6 +29,10 @@ class FeaturedProductsModel{
       productImg: json["image"],
       productPrice: json["price"].toStringAsFixed(2),
       productBrand: json["brand"],
+      saleTag:json['comparison_data']?["sale"]??false, // Fallback to false if sale is null
+      // Use null-aware operator to handle cases where comparison_data or special_price might be null
+      // If special_price is null, fallback to price
+      salePrice:json['comparison_data']?["special_price"].toString()?? json["price"].toStringAsFixed(2),
 
     );
   }

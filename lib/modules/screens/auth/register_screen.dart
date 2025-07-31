@@ -36,10 +36,12 @@ class RegState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
   TextEditingController dobController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   late BottomLoader bl;
+  late var method;
   bool isBarbadosSelected = false; // State to track if "Barbados" is selected
   String? selectedParish; // Selected parish from the dropdown
 
@@ -77,6 +79,7 @@ class RegState extends State<RegisterScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: ToolbarImage(
@@ -214,7 +217,7 @@ class RegState extends State<RegisterScreen> {
 
                               if (selectedDate != null) {
                                 // Format the date as needed, e.g., "dd/MM/yyyy"
-                                String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                String formattedDate = "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
                                 dobController.text = formattedDate;
                               }
                             },
@@ -273,9 +276,7 @@ class RegState extends State<RegisterScreen> {
                             onTap: (){
 
                               showCountryPicker(
-
                                 context: context,
-
                                 showPhoneCode: true, // optional. Shows phone code before the country name.
                                 onSelect: (Country country) {
                                   print('Select country: ${country.displayName}');
@@ -379,7 +380,7 @@ class RegState extends State<RegisterScreen> {
                       const SizeBoxHeight16(),
 
                       const SizeBoxHeight8(),
-                      Stack(
+                    Stack(
                         children: [
                           Container(
                             height: 60,
@@ -393,11 +394,11 @@ class RegState extends State<RegisterScreen> {
 
                           AppIconField(
                             controller: emailController,
-                            hint: 'Email',
-                            prefixIcon: Constants.emailIcon,
+                            hint:'Email',
+                            prefixIcon:Constants.emailIcon,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
-                            validator: (val) {
+                           validator:(val) {
                               if (val == null || val.trim().isEmpty) {
                                 return 'Required ';
                               }else if(val.trim().isNotEmpty){
@@ -406,11 +407,43 @@ class RegState extends State<RegisterScreen> {
                               }
                               return null;
 
-                            },
+                            }
                           ),
                         ],
                       ),
 
+                      const SizeBoxHeight16(),
+
+                      const SizeBoxHeight8(),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color:AppColors.containerBgColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.containerBgColor,width: 0.5)
+
+                            ),
+                          ),
+
+                          AppIconField(
+                            controller: phoneNumberController,
+                            hint:'Phone Number with country code',
+                            prefixIcon:Constants.phone,
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.next,
+                            validator:(val) {
+                              if (val == null || val.trim().isEmpty) {
+                                return "Phone is Required";
+                              } else if (val.trim().length < 11) {
+                                return "Valid Phone Required";
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
                       const SizeBoxHeight16(),
 
                       const SizeBoxHeight8(),
@@ -478,8 +511,6 @@ class RegState extends State<RegisterScreen> {
                         ],
                       ),
                       const SizeBoxHeight2(),
-
-
                       const SizeBoxHeight16(),
                       AppSimpleButton(
                         onTap: () async{
@@ -549,18 +580,22 @@ class RegState extends State<RegisterScreen> {
   }
   Future<dynamic> signup() async {
     var url = Uri.parse('${Constants.baseUrl}signUp');
+    print("date is ${dobController.text.toString()}");
+
     var response = await http
         .post(
       url,
-      body: {
+      body:{
         "email": emailController.text.toString(),
         "password": passwordController.text.toString(),
+        'phone': phoneNumberController.text.toString(),
         "name":firstNameController.text.toString(),
         "last_name":lastNameController.text.toString(),
         "dob":dobController.text.toString(),
-        "state":locationController.text.toString(),
-        "country":countryController.text.toString()
-      },
+        "state":isBarbadosSelected?selectedParish:locationController.text.toString(),
+        "country":countryController.text.toString(),
+
+      }
 
     )
         .timeout(const Duration(seconds: 10),onTimeout: (){
@@ -568,11 +603,16 @@ class RegState extends State<RegisterScreen> {
       return confirmationPopup(context, "Check your Internet Connection!");
     });
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print(response.body);
       dynamic body = jsonDecode(response.body);
       dynamic status=body['message'];
       bl.close();
+      setState(() {
+        setState(() {
+          Constants.tempPhone=phoneNumberController.text.toString();
+        });
+      });
         Fluttertoast.showToast(
             msg: status,
             toastLength: Toast.LENGTH_SHORT,
@@ -582,7 +622,7 @@ class RegState extends State<RegisterScreen> {
             textColor: Colors.white,
             fontSize: 16.0
         );
-       Navigator.pop(context);
+      Navigator.pushNamed(context,'/OtpScreen');
     } else {
 
       dynamic body = jsonDecode(response.body);

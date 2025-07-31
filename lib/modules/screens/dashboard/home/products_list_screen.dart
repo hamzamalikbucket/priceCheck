@@ -1,7 +1,7 @@
 import 'package:compareapp/Models/brands_model.dart';
 import 'package:compareapp/Models/categories_product_model.dart';
 import 'package:compareapp/Models/grocery_products_model.dart';
-import 'package:compareapp/Models/products_model.dart';
+
 import 'package:compareapp/Models/sub_cat_model.dart';
 import 'package:compareapp/Models/vendor_model.dart';
 import 'package:compareapp/resources/Widgets/app_text.dart';
@@ -87,47 +87,55 @@ class ProductState extends State<ProductsListScreen> {
     }
   }
 
-  Future<void> fetchProducts(String category, String catCode,String catId) async {
+  Future<void> fetchProducts(String category, String catCode, String catId) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
-      dynamic data = await apiService.getProductsByCatId(catCode);
-      List<SubCatModel> subCats = await apiService.getSubCategoriesByCatId(catId);
-      List<BrandsModel> brands = await apiService.getBrands(catCode);
-      List<VendorModel> stores = await apiService.getVendors();
+      final results = await Future.wait([
+        apiService.getProductsByCatId(catCode),
+        apiService.getSubCategoriesByCatId(catId),
+        apiService.getBrands(catCode),
+        apiService.getVendors(),
+      ]);
       setState(() {
-        productsList.clear();
+        productsList
+          ..clear()
+          ..addAll(results[0]);
+        subCatList
+          ..clear()
+          ..add(SubCatModel(subCatName:"All Sub Categories", subCatCode: "null", subCatId: "null"))
+          ..addAll(results[1] as Iterable<SubCatModel>);
+        brandsList
+          ..clear()
+          ..add(BrandsModel(brandName:"All Brands",))
+          ..addAll(results[2] as Iterable<BrandsModel>);
+        vendorList
+          ..clear()
+          ..add( VendorModel(vendorName:"All Supermarkets", vendorCode: "Value",vendorId:0),)
+          ..addAll(results[3] as Iterable<VendorModel>);
         isLoading = false;
-        productsList.addAll(data);
-        subCatList.clear();
-        brandsList.clear();
-        subCatList.addAll(subCats);
-        brandsList.addAll(brands);
-        vendorList.addAll(stores);
       });
-
     } catch (e) {
-      isLoading = false;
+      setState(() {
+        isLoading = false;
+      });
       print("Error fetching products: $e");
     }
   }
   Future<void> fetchSearchProducts(String searchText) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
-      dynamic data = await apiService.getSearchProducts(searchText);
-
+      final data = await apiService.getSearchProducts(searchText);
       setState(() {
-        productsList.clear();
+        productsList
+          ..clear()
+          ..addAll(data);
         isLoading = false;
-        productsList.addAll(data);
-
       });
-
     } catch (e) {
-      isLoading = false;
+      setState(() {
+        isLoading = false;
+      });
       print("Error fetching products: $e");
     }
   }
-
   Future<void> fetchFilterProducts(
       String? catId, String? subCatId, String? brandName, String? basketValue,String? sortValue,String? storeId) async {
     try {
@@ -408,11 +416,41 @@ class ProductState extends State<ProductsListScreen> {
                                                     subCategory) =>
                                                 subCategory
                                                     .subCatName, // Function to get the name to display
-                                            onChange: (value) {
-                                              setState(() {
-                                                selectedSubCategoryValue =
-                                                    value;
-                                              });
+                                            onChange: (value) async {
+                                              SubCatModel subModel =
+                                                  value as SubCatModel;
+                                           if(subModel.subCatId=="null"){
+
+
+
+                                               List<BrandsModel> brands = await  apiService.getBrands(catCode);
+                                               setState(()  {
+                                                 brandsList.clear();
+                                                 brandsList.add(BrandsModel(brandName: "All Brands"));
+                                                 brandsList.addAll(brands);
+
+                                                 selectedSubCategoryValue =
+                                                     value;
+                                                 selectedBrandsValue=null;
+                                                 selectedSubCategoryValue?.subCatCode="";
+
+                                               });
+
+                                              }
+                                           else{
+                                             List<BrandsModel> brands = await apiService.getBrandsBySubCat(catCode,
+                                                 subModel.subCatId);
+                                             setState(()  {
+                                               brandsList.clear();
+                                               brandsList.addAll(brands);
+
+                                               selectedSubCategoryValue =
+                                                   value;
+                                               selectedBrandsValue=null;
+
+                                             });
+                                           }
+
                                             },
                                           )
                                         ],
@@ -487,17 +525,27 @@ class ProductState extends State<ProductsListScreen> {
                                                         .containerBgColor,
                                                     width: 0.5)),
                                           ),
+
                                           FormDropDownField<BrandsModel>(
                                             items:brandsList,
                                             hint: "Select Brands",
                                             value: selectedBrandsValue,
                                             displayText: (BrandsModel
-                                            brands) =>
-                                            brands.brandName,
+                                            brands) => brands.brandName,
                                             onChange: (value) {
+
                                               setState(() {
-                                                selectedBrandsValue = value;
+                                                if (value != null && (value as BrandsModel).brandName == "All Brands") {
+                                                  // Keep "All Brands" selected in UI, but set brandName to "" for backend
+                                                  selectedBrandsValue = value;
+                                                  print(selectedBrandsValue?.brandName.toString());
+
+                                                } else {
+                                                  selectedBrandsValue = value;
+                                                }
                                               });
+
+
                                             },
                                           )
                                         ],
@@ -600,16 +648,25 @@ class ProductState extends State<ProductsListScreen> {
                                           print(selectedBrandsValue?.brandName.toString());
                                           print(selectedStoreValue?.vendorId.toString());
                                           print( basketValue );
+
+                                          String brandNameToSend = selectedBrandsValue?.brandName == "All Brands" ? "" : selectedBrandsValue?.brandName ?? "";
+                                          print( "+>>>>>>>$brandNameToSend" );
+
+
+
+
+
                                           fetchFilterProducts(
-                                            catCode,
+                                              catCode,
                                               selectedSubCategoryValue?.subCatCode, // Pass sub-category ID
-                                              selectedBrandsValue?.brandName,    // Pass brand name
+                                              brandNameToSend,    // Pass brand name
                                               basketValue  ,
-                                            sortTag,
+                                              sortTag,
                                               selectedStoreValue?.vendorId.toString(),
 
                                             // Pass basket value
                                           );
+                                        
                                           Navigator.pop(context);
                                         },
                                         height: 48,
@@ -624,10 +681,9 @@ class ProductState extends State<ProductsListScreen> {
                                         onTap: () {
 
                                           setState(() {
-
-                                            selectedSubCategoryValue = null;
+                                            selectedSubCategoryValue=null;
                                             selectedSortValue = null;
-                                            selectedBrandsValue = null;
+                                            selectedBrandsValue =  null;
                                             selectedBasketValue = null;
                                             selectedStoreValue = null;
                                             basketValue = "Value";
@@ -636,7 +692,7 @@ class ProductState extends State<ProductsListScreen> {
                                             productsList.clear();
                                           });
                                           fetchProducts(category, catCode,catId);
-                                          Navigator.pop(context);
+
 
 
 
@@ -702,7 +758,7 @@ class ProductState extends State<ProductsListScreen> {
                               crossAxisSpacing: 6, // Space between columns
                               mainAxisSpacing: 30, // Space between rows
                               childAspectRatio:
-                                  0.52, // Adjust aspect ratio for item height and width
+                                  0.45, // Adjust aspect ratio for item height and width
                             ),
 
                             scrollDirection: Axis.vertical,
@@ -718,7 +774,7 @@ class ProductState extends State<ProductsListScreen> {
 
                                       "id":product.productId,
                                       "image":product.productImg,
-                                      "price":product.productPrice,
+                                      "price":product.saleTag?product.salePrice:product.productPrice,
                                       "name":product.productName,
 
                                     }
@@ -734,6 +790,22 @@ class ProductState extends State<ProductsListScreen> {
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        product.saleTag? Row(
+                                          children: [
+                                            Container(
+                                              width: 30,
+                                              color: AppColors.greenColor,
+                                              child: const Center(
+                                                child: AppText(
+                                                  "Sale",
+                                                  size: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.appBarBackgroundColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ): const SizedBox(),
                                         Container(
                                           width: 170,
                                           height: 150,
@@ -773,17 +845,33 @@ class ProductState extends State<ProductsListScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 color: AppColors.black,
                                               ),
+
                                               const SizeBoxHeight8(),
                                               Row(
                                                 children: [
-                                                  AppText(
+                                                  Text(
                                                     "\$${product.productPrice}",
+                                                    style:  TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w600,
+                                                      color:product.saleTag? AppColors.redColor: AppColors.black,
+                                                      decoration: product.saleTag? TextDecoration.lineThrough:TextDecoration.none,
+                                                    ),
+                                                  )
+
+                                                ],
+                                              ),
+                                              const SizeBoxHeight8(),
+                                              product.saleTag? Row(
+                                                children: [
+                                                  AppText(
+                                                    "\$${product.salePrice}",
                                                     size: 12,
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColors.black,
                                                   ),
                                                 ],
-                                              ),
+                                              ):const SizedBox(),
                                               const SizeBoxHeight8(),
                                               Row(
                                                 mainAxisAlignment:

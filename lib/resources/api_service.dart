@@ -122,6 +122,7 @@ class ApiService {
       var response = await http.get(url).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
+          print(body);
         return (body['data'] as List)
             .map((item) => SuperMarketProductsModel.fromJson(item))
             .toList();
@@ -154,6 +155,26 @@ class ApiService {
       return [];
     }
   }
+  Future<List<BrandsModel>> getBrandsBySubCat(String catCode,String subCatId) async {
+    String endpoint = "brand/$catCode?sub_category_id=$subCatId";
+    print(endpoint);
+    var url = Uri.parse('${Constants.baseUrl}$endpoint');
+    try {
+      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        dynamic body = jsonDecode(response.body);
+        return (body['data'] as List)
+            .map((item) => BrandsModel.fromJson(item))
+            .toList();
+      } else {
+        _showError(body: response.body);
+        return [];
+      }
+    } catch (e) {
+      _showError(error: e.toString());
+      return [];
+    }
+  }
 
   Future<List<SuperMarketProductsModel>> getProductsbyVendorsCode(String vendorId) async {
     String endpoint = "products?vendor_id=$vendorId";
@@ -162,8 +183,30 @@ class ApiService {
       var response = await http.get(url).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
+        print(body);
+
         return (body['data'] as List)
             .map((item) => SuperMarketProductsModel.fromJson(item))
+            .toList();
+      } else {
+        _showError(body: response.body);
+        return [];
+      }
+    } catch (e) {
+      _showError(error: e.toString());
+      return [];
+    }
+  }
+  Future<List<FeaturedProductsModel>> getFeaturedProductsbyVendorsCode(String vendorId) async {
+    String endpoint = "featureProduct?vendor_id=$vendorId";
+
+    var url = Uri.parse('${Constants.baseUrl}$endpoint');
+    try {
+      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        dynamic body = jsonDecode(response.body);
+        return (body['data'] as List)
+            .map((item) => FeaturedProductsModel.fromJson(item))
             .toList();
       } else {
         _showError(body: response.body);
@@ -264,6 +307,7 @@ class ApiService {
       var response = await http.get(url).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
+        print(body);
         return (body['data'] as List)
             .map((item) => ComparisonListModel.fromJson(item))
             .toList();
@@ -307,7 +351,7 @@ class ApiService {
     showDialog(
       context: dialogContext,
       builder: (context) => AlertDialog(
-        title: const Text("Error"),
+        title: const Text("Alert"),
         content: Text(message),
         actions: [
           TextButton(

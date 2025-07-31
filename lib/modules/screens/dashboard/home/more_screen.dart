@@ -9,7 +9,10 @@ import 'package:compareapp/resources/widgets/buttons/app_button.dart';
 import 'package:compareapp/resources/widgets/sized_boxes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../resources/utils/cart_manager.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -83,24 +86,29 @@ class MoreState extends State<MoreScreen> {
                   backgroundImage:
                       AssetImage('assets/images/profilecircle.png'),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText(
-                      Constants.userName,
-                      size: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black,
-                      justifyText: true,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:5.0,right:5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AppText(
+                          Constants.userName,
+                          size: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.black,
+                          justifyText: true,
+                        ),
+                        AppText(
+                          Constants.userEmail,
+                          size: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                          justifyText: true,
+                        ),
+                      ],
                     ),
-                    AppText(
-                      Constants.userEmail,
-                      size: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.black,
-                      justifyText: true,
-                    ),
-                  ],
+                  ),
                 ),
                 AppGradiantButton(
                   onTap: () {
@@ -137,9 +145,8 @@ class MoreState extends State<MoreScreen> {
                     ),
                     const SizeBoxHeight12(),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/SmallBusinessScree');
-                      },
+                      onTap: () => _launchAsInAppWebViewWithCustomHeaders(
+                          Uri.parse(Constants.smallBusinessUrl)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -342,6 +349,11 @@ class MoreState extends State<MoreScreen> {
 
             GestureDetector(
               onTap: () {
+                setState(() {
+                  Constants.verifiedViaPhone=false;
+                });
+                clearLoginState();
+
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -356,6 +368,11 @@ class MoreState extends State<MoreScreen> {
         ),
       ),
     );
+  }
+  Future<void> clearLoginState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isLoggedIn');
+    CartManager().cartList.clear();
   }
 }
 /*   Row(

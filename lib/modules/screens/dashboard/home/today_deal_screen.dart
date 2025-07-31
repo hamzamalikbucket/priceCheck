@@ -35,8 +35,10 @@ class DealState extends State<TodayDealScreen> {
     });
     List<PostModel> data = await apiService.getDeals();
 
+
     setState(() {
       postList.addAll(data);
+
       isLoading = false;
     });
   }
@@ -56,7 +58,11 @@ class DealState extends State<TodayDealScreen> {
       throw 'Could not launch $url';
     }
   }
-
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,11 +149,29 @@ class DealState extends State<TodayDealScreen> {
                                             );
                                           },
                                         )
-                                      : AspectRatio(
-                                          aspectRatio:
-                                              controller.value.aspectRatio,
-                                          child: VideoPlayer(controller),
-                                        ),
+                                      :FutureBuilder(
+                                    future: controller.initialize(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                controller.play();
+                                return AspectRatio(
+                                  aspectRatio: controller.value.aspectRatio,
+                                  child: VideoPlayer(controller),
+                                );
+                              } else if (snapshot.hasError) {
+                                return const Center(
+                                  child: Text(
+                                    'Error loading video',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                                 ),
                               ),
                               Padding(

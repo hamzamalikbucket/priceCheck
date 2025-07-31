@@ -137,6 +137,7 @@ class Constants {
   static const baseUrl ='https://stagging.infolytics.tech/api/';
   static const categoryImageBaseUrl ="https://stagging.infolytics.tech/public/categories/";
   static const aboutUrl ='https://bbprices.infolytics.tech/about';
+  static const smallBusinessUrl ='https://sba.bb/sba3/index.php/membership/directory';
   static const stagingUrl ="https://stagging.infolytics.tech/product/details/";
 
   static const helpUrl ='https://bbprices.infolytics.tech/help';
@@ -149,6 +150,9 @@ class Constants {
   static var userCountry ='';
   static var userId ='';
   static var state ='';
+  static var tempPhone ='';
+  static var phoneNumber ='';
+  static bool verifiedViaPhone =false;
 
 
 

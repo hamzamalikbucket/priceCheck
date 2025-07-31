@@ -35,6 +35,7 @@ class EditProfileState extends State<EditProfileScreen>
   TextEditingController marriageDateController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController oldPasswordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController dobController = TextEditingController();
@@ -222,7 +223,7 @@ class EditProfileState extends State<EditProfileScreen>
                               if (selectedDate != null) {
                                 // Format the date as needed, e.g., "dd/MM/yyyy"
                                 String formattedDate =
-                                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                    "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
                                 dobController.text = formattedDate;
                               }
                             },
@@ -377,7 +378,46 @@ class EditProfileState extends State<EditProfileScreen>
                           ),
                         ],
                       ),
+
                       const SizeBoxHeight16(),
+
+                      const SizeBoxHeight8(),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color:AppColors.containerBgColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.containerBgColor,width: 0.5)
+
+                            ),
+                          ),
+
+                          AppIconField(
+                            controller: emailController,
+                            hint: 'Email',
+                            isEnabled: false,
+
+                            prefixIcon: Constants.emailIcon,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            validator: (val) {
+                              if (val == null || val.trim().isEmpty) {
+                                return 'Required ';
+                              }else if(val.trim().isNotEmpty){
+                                return EmailValidator.validate(val) ? null : 'Please enter valid email';
+
+                              }
+                              return null;
+
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizeBoxHeight16(),
+
+
                       const SizeBoxHeight8(),
                       Stack(
                         children: [
@@ -390,29 +430,21 @@ class EditProfileState extends State<EditProfileScreen>
                                     color: AppColors.containerBgColor,
                                     width: 0.5)),
                           ),
-                          AppIconField(
-                            controller: emailController,
-                            hint: Constants.userEmail,
-                            prefixIcon: Constants.emailIcon,
-                            keyboardType: TextInputType.emailAddress,
+                          AppPasswordField(
+                            controller: oldPasswordController,
+                            hint: 'Old Password',
+                            prefixIcon: Constants.lock,
+                            suffixIcon: Constants.eye,
+                            keyboardType: TextInputType.visiblePassword,
+
                             textInputAction: TextInputAction.next,
                             validator: (val) {
-                              if (val == null || val.trim().isEmpty) {
-                                return 'Required ';
-                              } else if (val.trim().isNotEmpty) {
-                                return EmailValidator.validate(val)
-                                    ? null
-                                    : 'Please enter valid email';
+                           if (val!.isNotEmpty && val.trim().length < 8) {
+                                return "Password must be at least 8 characters";
                               }
                               return null;
                             },
-                            onChanged:(val){
-                              setState(() {
-                                emailController.text=val;
-                              });
 
-
-                            },
                           ),
                         ],
                       ),
@@ -431,15 +463,13 @@ class EditProfileState extends State<EditProfileScreen>
                           ),
                           AppPasswordField(
                             controller: passwordController,
-                            hint: 'Password',
+                            hint: 'New Password',
                             prefixIcon: Constants.lock,
                             suffixIcon: Constants.eye,
                             keyboardType: TextInputType.visiblePassword,
                             textInputAction: TextInputAction.next,
                             validator: (val) {
-                              if (val == null || val.trim().isEmpty) {
-                                return "Password is Required";
-                              } else if (val.trim().length < 8) {
+                            if (val!.isNotEmpty&& val.trim().length < 8) {
                                 return "Password must be at least 8 characters";
                               }
                               return null;
@@ -463,16 +493,14 @@ class EditProfileState extends State<EditProfileScreen>
                           ),
                           AppPasswordField(
                             controller: confirmController,
-                            hint: 'Confirm Password',
+                            hint: 'Confirm New Password',
 
                             prefixIcon: Constants.lock,
                             suffixIcon: Constants.eye,
                             keyboardType: TextInputType.visiblePassword,
                             textInputAction: TextInputAction.done,
                             validator: (val) {
-                              if (val == null || val.trim().isEmpty) {
-                                return "Password is Required";
-                              } else if (val.trim().length < 8) {
+                              if (val!.isNotEmpty&& val.trim().length < 8) {
                                 return "Password must be at least 8 characters";
                               } else if (val !=
                                   passwordController.text.toString()) {
@@ -521,6 +549,7 @@ class EditProfileState extends State<EditProfileScreen>
     print( "user id:${Constants.userId}");
     print( "email:${emailController.text.toString()}");
     print( "password:${passwordController.text.toString()}");
+    print( "oldPassword:${oldPasswordController.text.toString()}");
     print( "name:${firstNameController.text.toString()+lastNameController.text.toString()}");
     print( "dob:${dobController.text.toString()}");
     print( "state:${locationController.text.toString()}");
@@ -535,8 +564,9 @@ class EditProfileState extends State<EditProfileScreen>
         "password":passwordController.text.toString(),
         "name":firstNameController.text.toString()+lastNameController.text.toString(),
         "dob":dobController.text.toString(),
-        "state":locationController.text.toString(),
-        "country":countryController.text.toString()
+        "state":isBarbadosSelected?selectedParish:locationController.text.toString(),
+        "country":countryController.text.toString(),
+        "old_password":oldPasswordController.text.toString()
       },
 
     )
@@ -564,7 +594,7 @@ class EditProfileState extends State<EditProfileScreen>
     } else {
 
       dynamic body = jsonDecode(response.body);
-      String error = body['error'];
+      String error = body['message'];
       bl.close();
       confirmationPopup(context, error);
     }
