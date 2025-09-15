@@ -416,7 +416,7 @@ class _FutureGramDetailState extends State<FutureGramDetail> {
                                       'Reply',
                                       size: 14,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.bluecolor,
+                                      color: AppColors.appGreenColor,
                                     ),
                                   ),
                                 ],

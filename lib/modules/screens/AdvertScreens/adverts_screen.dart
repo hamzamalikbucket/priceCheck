@@ -49,7 +49,7 @@ class AllState extends State<Adverts> {
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(
                         width: 1,
-                        color: AppColors.bluecolor,
+                        color: AppColors.appGreenColor,
                       ),
                     ),
                     child: TextFormField(
@@ -66,7 +66,7 @@ class AllState extends State<Adverts> {
                           child: InkWell(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AppColors.bluecolor,
+                                color: AppColors.appGreenColor,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: const ImageIcon(
@@ -95,7 +95,7 @@ class AllState extends State<Adverts> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.bluecolor,
+                  color: AppColors.appGreenColor,
                   borderRadius: BorderRadius.circular(37),
                 ),
                 child: TextButton(

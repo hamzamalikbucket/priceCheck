@@ -186,7 +186,7 @@ class AppBorderButton extends StatelessWidget {
     this.height,
     this.btnText = 'Button',
 
-    this.borderColor = AppColors.bluecolor,
+    this.borderColor = AppColors.appGreenColor,
     this.btnTextColor = AppColors.primaryColor,
     this.btnColor = AppColors.buttonBlueColor,
     this.iconColor = AppColors.primaryColor,

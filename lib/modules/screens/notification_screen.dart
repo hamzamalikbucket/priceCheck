@@ -187,7 +187,7 @@ class NotiState extends State<NotificationScreen> {
                       decoration: BoxDecoration(
                           color:AppColors.blueLightColor,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                          border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                       ),
                     ),

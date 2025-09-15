@@ -98,7 +98,7 @@ class LoginViaPhoneState extends State<LoginViaPhone> {
                           ),
                           AppIconField(
                               controller: phoneController,
-                              hint: 'Enter Phone Number',
+                              hint: 'Enter Phone Number with country code',
                               prefixIcon: Constants.phone,
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.next,

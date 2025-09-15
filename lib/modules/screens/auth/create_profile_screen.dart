@@ -75,7 +75,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -111,7 +111,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -145,7 +145,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -179,7 +179,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -213,7 +213,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -248,7 +248,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -282,7 +282,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -317,7 +317,7 @@ class CreateProfileState extends State<CreateProfileScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),

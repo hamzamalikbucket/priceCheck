@@ -42,7 +42,6 @@ class GroceryState extends State<GroceryListScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-
     // Load grocery list and fetch supermarket list when dependencies change
     if (groceryList.isEmpty) {
       _loadGroceryList();
@@ -52,21 +51,13 @@ class GroceryState extends State<GroceryListScreen> {
     }
   }
 
-
-
-
-
-
   @override
   void didUpdateWidget(covariant GroceryListScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!hasFetchedSuggestions) {
-
       _onCartChange(); // Ensure suggestions are fetched on tab revisit
     }
   }
-
-
 
   Future<void> fetchSuggestedComparison(String productId) async {
     try {
@@ -144,7 +135,6 @@ class GroceryState extends State<GroceryListScreen> {
         onRefresh: () async {
           _loadGroceryList();
           _onCartChange();
-
         },
         child: SafeArea(
           child: SingleChildScrollView(
@@ -180,7 +170,11 @@ class GroceryState extends State<GroceryListScreen> {
                   const Divider(),
                   SizedBox(
                     child: isLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.appBlueColor,
+                            ),
+                          )
                         : groceryList.isEmpty
                             ? const Center(
                                 child: AppText(
@@ -211,9 +205,11 @@ class GroceryState extends State<GroceryListScreen> {
                                                 height: 70,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(20),
+                                                        BorderRadius.circular(
+                                                            20),
                                                     border: Border.all(
-                                                        color: AppColors.noColor,
+                                                        color:
+                                                            AppColors.noColor,
                                                         width: 0.5)),
                                                 child: Image.network(
                                                   tM.productImg,
@@ -241,7 +237,8 @@ class GroceryState extends State<GroceryListScreen> {
                                                     AppText(
                                                       tM.productName,
                                                       size: 10,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       color: AppColors.black,
                                                     ),
                                                     const SizeBoxHeight8(),
@@ -271,7 +268,8 @@ class GroceryState extends State<GroceryListScreen> {
                                                               tM.quantity == 1
                                                                   ? const SizedBox()
                                                                   : GestureDetector(
-                                                                      onTap: () {
+                                                                      onTap:
+                                                                          () {
                                                                         setState(
                                                                             () {
                                                                           tM.quantity -=
@@ -283,10 +281,10 @@ class GroceryState extends State<GroceryListScreen> {
                                                                         "-",
                                                                         color: AppColors
                                                                             .primaryColor,
-                                                                        size: 20,
+                                                                        size:
+                                                                            20,
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
+                                                                            FontWeight.w500,
                                                                       ),
                                                                     ),
                                                               Container(
@@ -345,8 +343,8 @@ class GroceryState extends State<GroceryListScreen> {
                                                           ),
                                                         ),
                                                         IconButton(
-                                                          icon: SvgPicture.asset(
-                                                              Constants
+                                                          icon: SvgPicture
+                                                              .asset(Constants
                                                                   .deleteButton),
                                                           onPressed: () {
                                                             if (mounted) {
@@ -398,101 +396,144 @@ class GroceryState extends State<GroceryListScreen> {
                                           ],
                                         ),
                                         const Divider(),
-                                    isLoading
-                                        ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                        : suggestedMap.containsKey(tM.productId) &&
-                                        suggestedMap[tM.productId] != null &&
-                                        suggestedMap[tM.productId]!.isNotEmpty
-                                        ? Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 100,
-                                          child: ListView.builder(
-                                            itemCount: suggestedMap[tM.productId]!.length,
-                                            scrollDirection: Axis.horizontal,
-                                            physics: const AlwaysScrollableScrollPhysics(),
-                                            itemBuilder: (context, index) {
-                                              ComparisonListModel cM = suggestedMap[tM.productId]![index];
-                                              bool isSelected = selectedVendors[tM.productId] == cM.vendorName;
+                                        isLoading
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      color: AppColors.appBlueColor,
+                                                    ),
+                                              )
+                                            : suggestedMap.containsKey(
+                                                        tM.productId) &&
+                                                    suggestedMap[
+                                                            tM.productId] !=
+                                                        null &&
+                                                    suggestedMap[tM.productId]!
+                                                        .isNotEmpty
+                                                ? Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 100,
+                                                        child: ListView.builder(
+                                                          itemCount: suggestedMap[
+                                                                  tM.productId]!
+                                                              .length,
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          physics:
+                                                              const AlwaysScrollableScrollPhysics(),
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            ComparisonListModel
+                                                                cM =
+                                                                suggestedMap[tM
+                                                                        .productId]![
+                                                                    index];
+                                                            bool isSelected =
+                                                                selectedVendors[
+                                                                        tM.productId] ==
+                                                                    cM.vendorName;
 
-                                              return Row(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selectedVendors[tM.productId] = cM.vendorName;
-                                                          tM.productPrice = cM.vendorPrice;
-                                                          tM.martName = cM.vendorName;
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: isSelected
-                                                              ? AppColors.greenColor // Green color for selected
-                                                              : AppColors.primaryColor,
-                                                          border: Border.all(
-                                                            width: 0.5,
-                                                            color: AppColors.greyColor,
-                                                          ),
-                                                          borderRadius: BorderRadius.circular(7.7),
-                                                        ),
-                                                        child: GestureDetector(
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: Column(
-                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  children: [
-                                                                    AppText(
-                                                                      cM.vendorName,
-                                                                      size: 12,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      color: AppColors.black,
+                                                            return Row(
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          left:
+                                                                              10,
+                                                                          right:
+                                                                              10),
+                                                                  child:
+                                                                      GestureDetector(
+                                                                    onTap: () {
+                                                                      setState(
+                                                                          () {
+                                                                        selectedVendors[
+                                                                            tM
+                                                                                .productId] = cM
+                                                                            .vendorName;
+                                                                        tM.productPrice =
+                                                                            cM.vendorPrice;
+                                                                        tM.martName =
+                                                                            cM.vendorName;
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: isSelected
+                                                                            ? AppColors.yellowColor // Green color for selected
+                                                                            : AppColors.primaryColor,
+                                                                        border:
+                                                                            Border.all(
+                                                                          width:
+                                                                              0.5,
+                                                                          color:
+                                                                              AppColors.greyColor,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(7.7),
+                                                                      ),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(8.0),
+                                                                              child: Column(
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  AppText(
+                                                                                    cM.vendorName,
+                                                                                    size: 12,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                    color: AppColors.black,
+                                                                                  ),
+                                                                                  const SizeBoxHeight12(),
+                                                                                  AppText(
+                                                                                    "\$${cM.vendorPrice}",
+                                                                                    size: 16,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    color: AppColors.appBlueColor,
+                                                                                  ),
+                                                                                  const Divider(
+                                                                                    thickness: 2,
+                                                                                    color: AppColors.black,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                    const SizeBoxHeight12(),
-                                                                    AppText(
-                                                                      "\$${cM.vendorPrice}",
-                                                                      size: 16,
-                                                                      fontWeight: FontWeight.w600,
-                                                                      color: AppColors.appBlueColor,
-                                                                    ),
-                                                                    const Divider(
-                                                                      thickness: 2,
-                                                                      color: AppColors.black,
-                                                                    ),
-                                                                  ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                              ],
+                                                            );
+                                                          },
                                                         ),
                                                       ),
+                                                    ],
+                                                  )
+                                                : const Center(
+                                                    child: AppText(
+                                                      "Fetching.....No suggestions yet",
+                                                      size: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: AppColors
+                                                          .greyTextColor,
                                                     ),
                                                   ),
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                        ),
                                       ],
-                                    )
-                                        : const Center(
-                                      child: AppText(
-                                        "Fetching.....No suggestions yet",
-                                        size: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.greyTextColor,
-                                      ),
-                                    ),
-
-                                    ],
                                     ),
                                   );
                                 },

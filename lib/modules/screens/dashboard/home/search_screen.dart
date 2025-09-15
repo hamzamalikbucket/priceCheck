@@ -87,6 +87,7 @@ class SearchState extends State<SearchScreen>{
                           searchController.clear();
                         },
                         child: const ImageIcon(
+                          color: AppColors.appBlueColor,
                           AssetImage(Constants.search),
                         ),
                       ),

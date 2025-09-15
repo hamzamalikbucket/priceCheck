@@ -68,7 +68,7 @@ class UploadState extends State<UploadScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -106,7 +106,7 @@ class UploadState extends State<UploadScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -140,7 +140,7 @@ class UploadState extends State<UploadScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -174,7 +174,7 @@ class UploadState extends State<UploadScreen> {
                         decoration: BoxDecoration(
                             color:AppColors.blueLightColor,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: AppColors.bluecolor,width: 0.5)
+                            border: Border.all(color: AppColors.appGreenColor,width: 0.5)
 
                         ),
                       ),
@@ -213,7 +213,7 @@ class UploadState extends State<UploadScreen> {
                             underline: true,
                             size: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.bluecolor,
+                            color: AppColors.appGreenColor,
                           ),
                         ],
                       ),

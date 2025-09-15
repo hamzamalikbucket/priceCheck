@@ -204,14 +204,14 @@ class EditProfileState extends State<EditProfileScreen>
                                     data: ThemeData.light().copyWith(
                                       colorScheme: const ColorScheme.light(
                                         primary: AppColors
-                                            .bluecolor, // Selected date background color
+                                            .appGreenColor, // Selected date background color
                                         onSurface: AppColors
                                             .black, // Selected date text color
                                         onPrimary: AppColors
                                             .yellowColor, // Default text color
                                       ),
-                                      primaryColor: AppColors.bluecolor,
-                                      hintColor: AppColors.bluecolor,
+                                      primaryColor: AppColors.appGreenColor,
+                                      hintColor: AppColors.appGreenColor,
                                       buttonTheme: const ButtonThemeData(
                                           textTheme: ButtonTextTheme.primary),
                                     ),

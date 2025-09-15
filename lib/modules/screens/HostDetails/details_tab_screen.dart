@@ -41,7 +41,7 @@ class TabState extends State <DetailTab>{
                   color: AppColors.primaryColor,
                   border: Border.all(
                     width: 1,
-                    color: AppColors.bluecolor,
+                    color: AppColors.appGreenColor,
                   ),
                 ),
                 child: TabBar(

@@ -178,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           searchController.clear();
                         },
                         child: const ImageIcon(
+                          color: AppColors.appBlueColor,
                           AssetImage(Constants.search),
                         ),
                       ),
@@ -238,8 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(
                                     15), // Rounded corners
                                 side: const BorderSide(
-                                  color: AppColors.primaryColor, // Border color
-                                  width: 1, // Border width
+                                  color: AppColors.greyBgColor, // Border color
+                                  width: 0.2, // Border width
                                 ),
                               ),
                               child: SizedBox(

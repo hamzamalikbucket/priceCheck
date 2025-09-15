@@ -233,7 +233,7 @@ class _SendChatScreenState extends State<SendChatScreen> {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: comment.isCurrentUser
-                                  ? AppColors.bluecolor
+                                  ? AppColors.appGreenColor
                                   : AppColors.greyBgColor.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(12),
                             ),

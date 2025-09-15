@@ -7,14 +7,14 @@ class AppColors {
   static const containerBgColor = Color(0xffF7F8F8);
   static const black = Color(0xff000000);
   static const lightthemeColor = Color(0xffF1F0F7);
-  static const bluecolor = Color(0xff4CA2FF);
-  static const blueLightColor = Color(0xffE8F3FF);
+  static const appGreenColor = Color(0xff0FA4A6);
+  static const blueLightColor = Color(0xffa6bfbf);
   static const lightBgColor = Color(0xffF7F8F8);
-  static const appBlueColor = Color(0xff0045A1);
+  static const appBlueColor = Color(0xff0FA4A6);
 
-  static const buttonBlueColor = Color(0xff4CA2FF);
-  static const gradiantStartColor = Color(0xff0045A1);
-  static const gradiantEndColor = Color(0xff0045A1);
+  static const buttonBlueColor = Color(0xff0FA4A6);
+  static const gradiantStartColor = Color(0xff0FA4A6);
+  static const gradiantEndColor = Color(0xff0FA4A6);
   static const gradientBl = Color(0xffD9ECFA);
   static const redColors = Color(0xfffc6969);
   static const setColors = Color(0xff424242);
@@ -42,7 +42,7 @@ class AppColors {
 
   static const appBarBackgroundColor = Color(0xfff0f0f0);
   static const lightGreyColor = Color(0xFFF4F4F4);
-  static const yellowColor = Color(0xffF1BF38);
+  static const yellowColor = Color(0xffFED701);
 
   static const lightGreenColor = Color(0xff81E5E2);
   static const redColor = Color(0xffff0000);

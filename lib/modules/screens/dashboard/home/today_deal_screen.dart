@@ -71,7 +71,7 @@ class DealState extends State<TodayDealScreen> {
         backgroundColor:AppColors.primaryColor,
         elevation: 1,
         title: const AppText(
-          "Today' Deal",
+          "Today's Deal",
           size: 17,
           fontWeight: FontWeight.bold,
           color: AppColors.black,

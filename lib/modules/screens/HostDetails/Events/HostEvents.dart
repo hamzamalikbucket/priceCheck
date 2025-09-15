@@ -220,7 +220,7 @@ class HostEventState extends State<HostEvents>{
                          eVents.eventLocation,
                          size: 14,
                          fontWeight: FontWeight.w400,
-                         color: AppColors.bluecolor,
+                         color: AppColors.appGreenColor,
                        ),
                      ],
                    ),

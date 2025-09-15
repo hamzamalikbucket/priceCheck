@@ -75,7 +75,7 @@ class EventState extends State<EventByLocationScreen> {
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(
                           width: 1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
                         ),
                       ),
                       child: TextFormField(
@@ -92,7 +92,7 @@ class EventState extends State<EventByLocationScreen> {
                             child: InkWell(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   borderRadius: BorderRadius.circular(100),
                                 ),
                                 child: const ImageIcon(
@@ -121,7 +121,7 @@ class EventState extends State<EventByLocationScreen> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.bluecolor,
+                    color: AppColors.appGreenColor,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: TextButton(
@@ -297,7 +297,7 @@ class EventState extends State<EventByLocationScreen> {
                                 eVents.eventLocation,
                                 size: 14,
                                 fontWeight: FontWeight.w400,
-                                color: AppColors.bluecolor,
+                                color: AppColors.appGreenColor,
                               ),
                             ],
                           ),

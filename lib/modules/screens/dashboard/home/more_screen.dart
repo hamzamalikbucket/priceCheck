@@ -83,8 +83,10 @@ class MoreState extends State<MoreScreen> {
               children: [
                 const CircleAvatar(
                   radius: 30,
+                  backgroundColor: AppColors.appBlueColor,
                   backgroundImage:
                       AssetImage('assets/images/profilecircle.png'),
+
                 ),
                 Expanded(
                   child: Padding(
@@ -118,6 +120,7 @@ class MoreState extends State<MoreScreen> {
                   width: 83,
                   btnTextSize: 16,
                   btnText: "Edit",
+
                 ),
               ],
             ),

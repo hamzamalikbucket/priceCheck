@@ -92,7 +92,7 @@ class WelcomeState extends State<WelcomePageScreen> {
                     color: AppColors.primaryColor,
                     border: Border.all(
                       width: 0.5,
-                      color: AppColors.bluecolor,
+                      color: AppColors.appGreenColor,
                     ),
                   ),
                   child: Padding(

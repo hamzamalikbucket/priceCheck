@@ -78,7 +78,7 @@ class ProfileState extends State<ProfileScreen>
                       "Edit",
                       size: 16,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.bluecolor,
+                      color: AppColors.appGreenColor,
                     ),
                   ],
                 ),
@@ -104,7 +104,7 @@ class ProfileState extends State<ProfileScreen>
                                     children: [
                                       ImageIcon(
                             AssetImage(Constants.person),
-                            color: AppColors.bluecolor,
+                            color: AppColors.appGreenColor,
                                        size: 20,
         
                                       ),
@@ -127,7 +127,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -160,7 +160,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -172,7 +172,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 ImageIcon(
                                   AssetImage(Constants.userNameIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -195,7 +195,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -207,7 +207,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 ImageIcon(
                                   AssetImage(Constants.locationFieldIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -230,7 +230,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -242,7 +242,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 ImageIcon(
                                   AssetImage(Constants.genderIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -265,7 +265,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -277,7 +277,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 ImageIcon(
                                   AssetImage(Constants.calendarIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -300,7 +300,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -312,7 +312,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 ImageIcon(
                                   AssetImage(Constants.bioIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -335,7 +335,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -361,7 +361,7 @@ class ProfileState extends State<ProfileScreen>
                       "Edit",
                       size: 16,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.bluecolor,
+                      color: AppColors.appGreenColor,
                     ),
                   ],
                 ),
@@ -410,7 +410,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -443,7 +443,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -473,7 +473,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const SizeBoxHeight16(),
@@ -513,7 +513,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
         
@@ -567,7 +567,7 @@ class ProfileState extends State<ProfileScreen>
                               children: [
                                 const ImageIcon(
                                   AssetImage(Constants.publicBlueIcon),
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   size: 20,
         
                                 ),
@@ -593,7 +593,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                        Row(
@@ -630,7 +630,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
         
@@ -668,7 +668,7 @@ class ProfileState extends State<ProfileScreen>
                         const SizeBoxHeight16(),
                         const Divider(
                           thickness: 0.1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
         
                         ),
                         const Row(

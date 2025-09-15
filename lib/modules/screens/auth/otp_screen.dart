@@ -67,12 +67,17 @@ class VerifyState extends State<OtpScreen> {
                 SizedBox(
                   child: Column(
                     children: [
-                      Image.asset('assets/images/bioMatric.png',),
-                      const AppHeadings(
-                        'Verify Its You',
-                        size: 20,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.black,
+                      Image.asset('assets/images/bioMatric.png',
+
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top:18.0),
+                        child: AppHeadings(
+                          'Verify It\'s You',
+                          size: 20,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.black,
+                        ),
                       ),
                       const AppText(
                         'Enter OTP sent to your Email/Phone Number',
@@ -96,7 +101,7 @@ class VerifyState extends State<OtpScreen> {
                                 decoration: BoxDecoration(
                                   color: AppColors.blueLightColor,
                                   border: Border.all(
-                                      color: AppColors.bluecolor, width: 0.5),
+                                      color: AppColors.appGreenColor, width: 0.5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
@@ -108,7 +113,7 @@ class VerifyState extends State<OtpScreen> {
                                 decoration: BoxDecoration(
                                   color: AppColors.appBlueColor,
                                   border: Border.all(
-                                      color: AppColors.bluecolor, width: 0.5),
+                                      color: AppColors.appGreenColor, width: 0.5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
@@ -120,7 +125,7 @@ class VerifyState extends State<OtpScreen> {
                                 decoration: BoxDecoration(
                                   color: AppColors.blueLightColor,
                                   border: Border.all(
-                                      color: AppColors.bluecolor, width: 0.5),
+                                      color: AppColors.appGreenColor, width: 0.5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
@@ -308,6 +313,17 @@ class VerifyState extends State<OtpScreen> {
         MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen()),
             (Route<dynamic> route) => false,
       );
+
+    /*  larry ada bilal travel
+      kfc
+      hot cake
+      bramadi moor
+      pakka garah
+      china chowk roras road
+      uggo ki
+      sambrial moor  */
+
+
 
 
 

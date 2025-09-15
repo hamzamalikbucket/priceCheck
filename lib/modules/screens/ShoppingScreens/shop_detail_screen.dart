@@ -63,7 +63,7 @@ class DetailState extends State<ShopDetailScreen> {
   }
   Future<void> fetchSuggestedComparison(String productId) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
+
       dynamic data = await apiService.getSuggestedProductList(productId);
 
       setState(() {
@@ -245,7 +245,9 @@ class DetailState extends State<ShopDetailScreen> {
                           ),
                           const SizeBoxHeight8(),
                           isLoading
-                              ? const Center(child: CircularProgressIndicator())
+                              ? const Center(child: CircularProgressIndicator(
+                            color: AppColors.appBlueColor,
+                          ),)
                               : suggestedList.isEmpty
                               ? const Center(
                             child: AppText(

@@ -2,7 +2,7 @@ class Constants {
   static const logo = 'assets/images/logowhite.svg';
   static const authImg = 'assets/images/group.svg';
   static const loginBTn = 'assets/images/loginbtn.svg';
-  static const logOutBtn = 'assets/images/log_ouut_btn.svg';
+  static const logOutBtn = 'assets/images/logOut_btn.svg';
   static const getStartBtn = 'assets/images/getstartedbtn.svg';
   static const captChaImg = 'assets/images/captchaImg.svg';
   static const validate = 'assets/images/validatePromo.svg';

@@ -37,7 +37,7 @@ class CreateEventDialog extends StatelessWidget {
             color: Colors.white,
             border: Border.all(
               width: 1,
-              color: AppColors.bluecolor,
+              color: AppColors.appGreenColor,
             ),
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [

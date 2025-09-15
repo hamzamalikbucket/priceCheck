@@ -47,7 +47,7 @@ class _BirthState extends State<UpcomingScreen>{
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(
                           width: 1,
-                          color: AppColors.bluecolor,
+                          color: AppColors.appGreenColor,
                         ),
                       ),
                       child: TextFormField(
@@ -64,7 +64,7 @@ class _BirthState extends State<UpcomingScreen>{
                             child: InkWell(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: AppColors.bluecolor,
+                                  color: AppColors.appGreenColor,
                                   borderRadius: BorderRadius.circular(100),
                                 ),
                                 child: const ImageIcon(

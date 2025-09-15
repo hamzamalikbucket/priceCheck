@@ -38,7 +38,7 @@ class AppRadioButton extends StatelessWidget {
             value: value,
             onChanged: enabled ? onChanged : null,
             groupValue: groupValue,
-            activeColor: AppColors.bluecolor,
+            activeColor: AppColors.appGreenColor,
           ),
           Flexible(
             child: AppText(
@@ -95,7 +95,7 @@ class AppRadioButtonList extends StatelessWidget {
             value: value,
             onChanged: enabled ? onChanged : null,
             groupValue: groupValue,
-            activeColor: AppColors.bluecolor,
+            activeColor: AppColors.appGreenColor,
           ),
           AppText(
             text,

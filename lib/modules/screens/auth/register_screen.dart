@@ -200,12 +200,12 @@ class RegState extends State<RegisterScreen> {
                                   return Theme(
                                     data: ThemeData.light().copyWith(
                                       colorScheme: const ColorScheme.light(
-                                        primary: AppColors.bluecolor, // Selected date background color
+                                        primary: AppColors.appGreenColor, // Selected date background color
                                         onSurface: AppColors.black,     // Selected date text color
                                         onPrimary:AppColors.yellowColor,  // Default text color
                                       ),
-                                      primaryColor: AppColors.bluecolor,
-                                      hintColor: AppColors.bluecolor,
+                                      primaryColor: AppColors.appGreenColor,
+                                      hintColor: AppColors.appGreenColor,
 
 
                                       buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
@@ -545,7 +545,7 @@ class RegState extends State<RegisterScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const AppText(
-                            'Already have an account?',
+                            'Login to Already have an account?',
                             size: 16,
                             fontWeight: FontWeight.w500,
                             color: AppColors.greyTextColor,
@@ -555,7 +555,7 @@ class RegState extends State<RegisterScreen> {
                              Navigator.pop(context);
                             },
                             child: const AppText(
-                              'Login',
+                              'Log In',
 
                               size: 16,
                               fontWeight: FontWeight.w700,

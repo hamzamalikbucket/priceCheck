@@ -20,7 +20,7 @@ class ApiService {
   Future<List<VendorModel>> getVendors() async {
     var url = Uri.parse('${Constants.baseUrl}vendor');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -39,7 +39,7 @@ class ApiService {
   Future<List<FeaturedProductsModel>> getFeaturedProducts() async {
     var url = Uri.parse('${Constants.baseUrl}featureProduct');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -58,7 +58,7 @@ class ApiService {
   Future<List<CategoryModel>> getCategories() async {
     var url = Uri.parse('${Constants.baseUrl}category');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         dynamic baseUrl = body["baseurl"];
@@ -80,7 +80,7 @@ class ApiService {
   Future<List<PostModel>> getDeals() async {
     var url = Uri.parse('${Constants.baseUrl}deals');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -99,7 +99,7 @@ class ApiService {
   Future<List<PostModel>> getSmallBusiness() async {
     var url = Uri.parse('${Constants.baseUrl}business');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -119,7 +119,7 @@ class ApiService {
     String endpoint = "products";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
           print(body);
@@ -140,7 +140,7 @@ class ApiService {
     String endpoint = "brand/$catCode";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -160,7 +160,7 @@ class ApiService {
     print(endpoint);
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -180,7 +180,7 @@ class ApiService {
     String endpoint = "products?vendor_id=$vendorId";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         print(body);
@@ -202,7 +202,7 @@ class ApiService {
 
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -222,7 +222,7 @@ class ApiService {
     String endpoint = "products/category?category_id=$catId";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -262,7 +262,7 @@ class ApiService {
 
     try {
       // Perform the GET request
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -283,7 +283,7 @@ class ApiService {
     String endpoint = "search?query=$query";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)
@@ -304,7 +304,7 @@ class ApiService {
     String endpoint = "products/other-vendors?product_id=$productId";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         print(body);
@@ -312,7 +312,8 @@ class ApiService {
             .map((item) => ComparisonListModel.fromJson(item))
             .toList();
       } else {
-        _showError(body: response.body);
+
+        //_showError(body: response.body);
         return [];
       }
     } catch (e) {
@@ -325,7 +326,7 @@ class ApiService {
     String endpoint = "subCategory?category_id=$catId";
     var url = Uri.parse('${Constants.baseUrl}$endpoint');
     try {
-      var response = await http.get(url).timeout(const Duration(seconds: 10));
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         dynamic body = jsonDecode(response.body);
         return (body['data'] as List)

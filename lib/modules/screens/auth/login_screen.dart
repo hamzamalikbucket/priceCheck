@@ -99,7 +99,7 @@ class LoginScreenState extends State<LoginScreen> {
                             controller: emailController,
                             hint: 'Enter email',
                             prefixIcon: Constants.emailIcon,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.next,
                               validator: (val) {
                                 if (val == null || val.trim().isEmpty) {
@@ -152,7 +152,7 @@ class LoginScreenState extends State<LoginScreen> {
                             },
                             child: const AppText(
                               underline: true,
-                              'Login With Phone Number',
+                              'Log in with phone number',
                               size: 12,
                               fontWeight: FontWeight.w500,
                               color: AppColors.appBlueColor,
@@ -211,7 +211,7 @@ class LoginScreenState extends State<LoginScreen> {
                     Navigator.pushNamed(context, '/RegisterScreen');
                   },
                   child: const AppText(
-                    'Dont have an account?SignUp',
+                    'Don\'t have an account? Sign Up',
                     size: 16,
                     fontWeight: FontWeight.w700,
                     color: AppColors.appBlueColor,
